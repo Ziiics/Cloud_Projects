@@ -1,4 +1,4 @@
-*** (In Progress) ***
+***In Progress***
 
 # Project 2 - AWS Two-Tier Infrastructure Build
 
