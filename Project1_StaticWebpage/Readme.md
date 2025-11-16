@@ -1,8 +1,10 @@
 # Project 1 - Static Website Deployment on AWS
 
+<img src="brand_project1.png" alt="Brand">
 🔗 <a href="http://project1-static-webpage.s3-website.us-east-2.amazonaws.com/">Live Demo</a>
 
 <p>S3 Website Endpoint:<br/><a href="http://project1-static-webpage.s3-website.us-east-2.amazonaws.com">http://project1-static-webpage.s3-website.us-east-2.amazonaws.com</a></p>
+<p>Route 53 routing (one that available, not on staging):<br/><a href="ds6gjuljiyr6n.cloudfront.net">ds6gjuljiyr6n.cloudfront.net</a></p>
 
 ### Overview
 This Projectis my first cloud deployment. I used simple static HTML page and hosted it using Amazon S3, added CloudFront for better performance, and then transfer my domain through Route53, and use ACM to make it able to accept HTTPS traffic. The goal is to understand how AWS handles storage, CDN distribution, DNS, and certificates.
@@ -33,7 +35,7 @@ This Projectis my first cloud deployment. I used simple static HTML page and hos
 
 
 ### Notes
-- CloudFront caches old files — if I update my HTML, I need to invalidate the cache.
+- CloudFront caches old files, it can take up to 24 hours to update — if I update my HTML, I need to invalidate the cache.
 - The S3 “website endpoint” is good for testing before adding CloudFront.
 - Route 53 is not free, even if you’re using Free Tier — something to keep in mind.
 - In production, S3 buckets should be private and accessed through CloudFront (using OAC), but for learning, public access is fine. I also won't use WAF (Web Application Firewall), but in real life, it is very recommended.
