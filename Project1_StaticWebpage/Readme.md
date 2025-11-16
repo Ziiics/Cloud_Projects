@@ -32,6 +32,7 @@ This Projectis my first cloud deployment. I used simple static HTML page and hos
 - [ ] Wait for Route 53 DNS transfer to finish
 - [ ] Confirm that the CloudFront URL works with HTTPS
 - [ ] Update my A-record to point to the distribution
+- [ ] Update bucket policy to only allow HTTPS
 
 
 ### Notes
@@ -42,7 +43,7 @@ This Projectis my first cloud deployment. I used simple static HTML page and hos
 - To check the static webpage through S3 webpage, go to the project's bucket, then go to **Properties tab**. Scroll all the way to the bottom and you will see **Bucket Website Endpoint**. Copy it and paste it to webpage.
 
 ### Bucket Policy I Used
-*For now, I allowed HTTP only ebecause JTTPS requires the certificate.*
+*For now, I allowed HTTP because HTTPS requires the certificate.*
 ```
 {
     "Version": "2012-10-17",
