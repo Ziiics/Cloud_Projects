@@ -1,0 +1,179 @@
+1️⃣ Static Website on S3 + CloudFront + (optional) Route 53
+A simple personal website (HTML/CSS only) hosted on S3, accelerated with CloudFront, and optionally reachable via a custom domain.
+Your README has: short explanation of what S3, CloudFront, and Route 53 are and a diagram of how a user request flows.
+
+What’s expected:
+- You host your site on S3 static website hosting (index.html + error.html).
+- You set correct bucket policy so the site can be accessed publicly, but only the website, not random uploads.
+- You add CloudFront in front of S3 to cache content and make it faster.
+- (Bonus) You connect a custom domain using Route 53 and configure HTTPS with ACM.
+
+
+2️⃣ Two-Tier Web App in a VPC (EC2 + RDS)
+A basic web app where the frontend runs on EC2 in public subnets, and the database (RDS) is in private subnets. Classic “web + DB” architecture.
+README explains, in simple terms, why we separate public vs private and how traffic flows.
+
+What’s expected:
+- You create a VPC with:
+  - 2 public subnets in different AZs (for web servers)
+  - 2 private subnets in different AZs (for DB)
+- Web server EC2s live in public subnets with a load balancer (ALB) in front.
+- The DB (RDS) is in private subnets with no public access; only web servers can talk to it.
+- You correctly set security groups:
+- ALB accepts HTTP/HTTPS from internet
+- EC2 accepts traffic only from ALB
+- RDS accepts traffic only from EC2 SG
+
+
+3️⃣ “Production-Style” VPC Networking (NAT, IGW, Route Tables)
+
+What you build: A clean VPC network layout that looks like something a real company would use: public/private subnets, NAT gateway, internet gateway, proper routes.
+README contains diagrams and screenshots showing: Route tables, Ping tests from public vs private instances, Explanation of “why we don’t put everything in public subnet.”
+
+What’s expected:
+- One VPC with:
+  - 2 public subnets (for internet-facing stuff)
+  - 2 private subnets (for internal servers)
+- Internet Gateway attached for public traffic.
+- NAT Gateway in a public subnet so private instances can reach the internet (for updates) without being exposed.
+- Different route tables:
+  - Public subnets → route 0.0.0.0/0 to IGW
+  - Private subnets → route 0.0.0.0/0 to NAT
+- You spin up:
+  - 1 EC2 in public subnet (can SSH/HTTP from internet)
+  - 1 EC2 in private subnet (no direct internet, but can ping/curl external sites via NAT)
+
+
+4️⃣ Serverless API (API Gateway + Lambda + DynamoDB)
+What you build: A tiny backend API—for example, a “Todo list” or “Notes” service—without servers, just functions and a database.
+README explains: What “serverless” means, High-level flow: user → API GW → Lambda → DDB → response, Simple example of a JSON request/response.
+
+What’s expected:
+- You design a simple REST API with endpoints like:
+- POST /items (create)
+- GET /items (list)
+- API Gateway routes requests to Lambda functions.
+- Lambda functions are written in Python or Node.js and talk to a DynamoDB table.
+- You use IAM roles so Lambda has permissions to DynamoDB (no hard-coded keys).
+
+
+5️⃣ CI/CD Pipeline (CodePipeline / GitHub → EC2 or S3)
+What you build:Automatic deployment pipeline so when you push code, AWS deploys it for you—no manual uploads.
+README includes: Screenshot(s) of pipeline stages, Explanation of what happens from “git push” to “app updated”, One small note on where logs live when something fails.
+
+What’s expected:
+- Source: GitHub repo or CodeCommit repo with your app (even just a simple HTML or Node app).
+- CodeBuild step that runs tests/build (even simple ones like npm test or pytest).
+- Deploy step:
+  - Either deploys a static site to S3, or
+  - Updates an app running on EC2 (e.g., via CodeDeploy or user data scripts).
+- You break it at least once, then fix it, and document it.
+
+
+6️⃣ Logging & Monitoring: CloudWatch + Alarms + Dashboards
+
+What you build:
+Monitoring for an app so you can tell if it’s healthy and react when something breaks.
+
+What’s expected:
+- Take one of your previous projects (like the 2-tier app) and:
+- Enable CloudWatch logs for EC2 (via CloudWatch Agent or default logs)
+- Enable detailed monitoring on EC2.
+- Create CloudWatch Alarms on:
+- High CPU (e.g., > 70% for 5 min)
+- Low free disk or high memory (if using agent)
+- Configure alarms to send notifications through SNS (email).
+- Build a simple CloudWatch Dashboard that shows:
+- EC2 CPU and network
+- DS CPU or connections if used
+
+README explains:
+Why monitoring is important
+Example scenario: “If CPU is high for a long time, maybe we need Auto Scaling or better instance.”
+
+
+7️⃣ Backup & Disaster Recovery Mini-Plan
+
+What you build:
+A small system that has backups and a simple disaster-recovery procedure.
+
+What’s expected:
+- Use your web+DB project again:
+- Enable automated backups for RDS, with defined retention.
+- Create manual EBS snapshots for EC2 root volumes.
+- For S3, set up:
+- Versioning
+- Lifecycle rules (e.g., move old versions to Glacier after 30/60 days).
+- Document a basic DR scenario, like:
+- “App server deleted. Steps to restore: launch new EC2 from AMI, attach security groups, update ALB target group.”
+- “DB corrupted. Steps to restore: create new RDS from snapshot, point app to new endpoint.”
+
+README is very human:
+“If X happens, here’s what I’d do. Here are screenshots of the settings.”
+
+
+8️⃣ Hybrid Networking “Lab” – Packet Tracer + AWS Design
+
+What you build:
+Not full real VPN (because that needs real devices), but a design + partial implementation of an on-prem network talking to AWS.
+
+What’s expected:
+- In Packet Tracer, you design a small “company” network:
+- 1 core router, 1 switch, a few PCs/servers in VLANs.
+- Use private IP ranges like 10.0.0.0/24, 10.0.1.0/24.
+- In AWS, you design a VPC with subnets like 10.1.0.0/16, clearly not overlapping with on-prem.
+- You create:
+- A VPN Gateway (VGW) or at least plan for one on AWS side.
+- A Customer Gateway config describing the on-prem router’s public IP and tunnel settings (this can be theoretical).
+- The key here is the architecture + configs:
+- Show how routes would look on on-prem router (Packet Tracer)
+- Show AWS route tables where traffic for 10.0.0.0/16 goes via the VPN
+
+README + diagrams explain in simple words:
+“This is our imaginary office. This is our cloud network. This tunnel connects them so office PCs can talk to cloud servers like they are in the same network.”
+This project proves you understand how network + cloud integrate, even without real hardware.
+
+
+9️⃣ Infrastructure as Code (Terraform or CloudFormation)
+
+What you build:
+Take one of your earlier environments (for example, the VPC + EC2 project) and rebuild it entirely from code, not clicking around the console.
+
+What’s expected:
+- Choose Terraform (simpler for job market) or CloudFormation.
+- Your code should create at least:
+- VPC
+- Public & private subnets
+- Internet Gateway, NAT, route tables
+- Security groups
+- 1 or 2 EC2 instances
+- You can destroy and recreate the whole environment with one command (terraform destroy / apply).
+
+README explains:
+Why IaC is powerful (repeatable, version-controlled, team-friendly)
+How to run your code (terraform init/apply etc.)
+Example of changing one variable (like instance type) and re-applying.
+
+
+🔟 Multi-Environment Setup + Cost/Permissions Management
+
+What you build:
+A simple “company-style” account structure with dev/test/prod separation and basic cost and IAM controls.
+
+What’s expected:
+- t minimum, separate environments:
+- Either 3 separate AWS accounts (preferred, using AWS Organizations if possible), or
+- 1 account with clearly separated dev/test/prod VPCs and naming conventions.
+- IAM setup:
+- Admin role (for you)
+- Read-only role
+- “Developer” role that can only touch dev environment.
+- Tagging strategy:
+- Tags like Environment=Dev/Prod, Owner=Zivana, Project=cloud_path.
+- Budgets + Alerts:
+- Use AWS Budgets to set a low monthly limit and email when near it.
+
+README includes:
+Explanation of why dev/stage/prod separation matters
+How tags help with cost reports
+Screenshot of a cost/budget alert setup.
