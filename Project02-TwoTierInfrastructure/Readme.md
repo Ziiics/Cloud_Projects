@@ -2,56 +2,69 @@
 
 # Project 2 - AWS Two-Tier Infrastructure Build
 
-
 ## Instruction received from ChatGPT
 
-This project builds a basic two-tier architecture, which is the foundation of most cloud applications:
-- Tier 1 — Web Server - Runs on EC2 (your frontend or backend service).
-- Tier 2 — Database - Runs on Amazon RDS (PostgreSQL or MySQL).
+### This project builds a basic two-tier architecture, which is the foundation of most cloud applications:
+- Tier 1 — Web Server (EC2 in Public Subnets)
+  - A web server runs in public subnets so users on the internet can reach it.
+  - It connects outward to the database tier but the database cannot connect back.
+- Tier 2 — Database Tier (RDS in Private Subnets)
+  - A managed database runs inside private subnets with no internet access.
+  - Only the web server is allowed to talk to it through Security Groups.
 
 Cnnect the EC2 instance → to the RDS database → inside a properly designed VPC.
 
-This is the most important beginner–intermediate cloud project because it teaches:
-- VPC
-- Public vs private subnets
-- Security Groups
-- Routing tables
-- Internet Gateways
-- NAT Gateways
-- EC2 configuration
-- RDS access control
-- Basic automation (optional with Terraform)
+### This is the most important beginner–intermediate cloud project because it teaches:
+1. 1 VPC
+2. Public Subnets (2 AZs) → Web server runs here
+3. Private Subnets (2 AZs) → Database runs here
+4. Internet Gateway → For public access to EC2
+5. NAT Gateway → For RDS-related systems (if any) to reach internet for updates
+6. Route Tables for public vs private traffic flow
+7. EC2 Instance (Linux) as the web tier
+8. RDS Database (MySQL or PostgreSQL) as the DB tier
+9. Security Groups controlling all ports between the two tiers
 
-It’s the closest beginner-friendly project to what companies actually deploy.
+### 🔐 Security Design (Very Important)
+- EC2 Security Group
+  - Inbound: HTTP/HTTPS (optional), SSH from your IP
+  - Outbound: Allow to the DB Security Group
+- RDS Security Group
+  - Inbound: ONLY from EC2's SG, on port 3306 (MySQL) or 5432 (Postgres)
+  - No public access, no direct internet
 
-### ✔️ Why This Project Matters
 
-Project 2 teaches you real infrastructure design, including:
-- private networks
-- secure DB access
-- port management
-- AMIs, key pairs
-- SSH
-- connecting apps to databases
-- troubleshooting connectivity
+### 🧩 What You Will Learn
+Networking concepts
+- Subnet placement
+- Routing
+- Difference between IGW and NAT
+- Why private subnets exist
+- Why you never expose a database publicly
 
-When you apply to cloud roles, interviewers always check if you can build a basic two-tier setup. This project absolutely deserves its own page/repo folder.
+Compute concepts
+- AMIs
+- Key pairs
+- SSH access
+- Installing a web server
 
-### Details
-Static = No backend logic, just files (example: your S3 static website)
+Database concepts
+- RDS parameter groups
+- DB endpoints
+- Security boundaries
+- Connecting EC2 → RDS using environment variables
 
-Dynamic = Application processes requests, interacts with a database (example: a Flask/Node.js app reading/writing data)
+### 🧪 What You Will Test
+- [] SSH into EC2 (public subnet)
+- [] From EC2, connect to your database using:
+mysql -h <RDS-endpoint> -u admin -p
+- [] Test web server returns your HTML/app
+- [] Confirm RDS cannot be reached from the internet
+- [] Confirm traffic only flows the right way
 
-Your Two-Tier Project sits in the middle:
-
-✔ Dynamic in terms of architecture
-- EC2 is running a server
-- RDS is storing data
-- There’s backend communication
-- There's networking, security groups, database connections
-
-✖ Not dynamic in terms of user-facing interactions (unless you add an app)
-
-If you install only a placeholder page, it’s not truly dynamic
-
-If you build a small backend app that reads/writes from the DB → yes, fully dynamic
+### 📊 Optional Add-Ons (For “Wow” factor)
+- Load Balancer (ALB)
+- Auto Scaling Group
+- Bastion Host (for private access)
+- Terraform version of the entire build
+- CloudWatch dashboardss
