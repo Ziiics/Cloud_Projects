@@ -67,4 +67,22 @@ mysql -h <RDS-endpoint> -u admin -p
 - Auto Scaling Group
 - Bastion Host (for private access)
 - Terraform version of the entire build
-- CloudWatch dashboardss
+- CloudWatch dashboards
+
+### Steps done
+1. Making VPC to section the subnet. Ensure to name it because if you have couple different VPC, it can be confusing.
+2. Once its done, create subnet (the option is on the left bar on the VPC). Choose the correct VPC and created 4 subnet (in the same region at the moment
+
+
+
+
+
+You're totally free to apply to any/all credit programs we have available:
+In the links below you can review each site with detailed information:
+1. The AWS Nonprofit Credit Program: https://aws.amazon.com/government-education/nonprofits/nonprofit-credit-program/
+2. The AWS Promotional Credit Program supports experimentation and development for sustainability-related projects. https://aws.amazon.com/government-education/sustainability-research-credits/
+3. AWS Migration Acceleration Program: https://aws.amazon.com/migration-acceleration-program/
+4. AWS Activate: https://aws.amazon.com/activate/portfolio-detail/
+5. AWS Lift: https://aws.amazon.com/events/apj/aws-lift/
+
+The account creation/action is intended to be hassle-free. I'm not sure what exactly happened the last time you created the account. 
