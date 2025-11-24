@@ -55,12 +55,12 @@ Database concepts
 - Connecting EC2 → RDS using environment variables
 
 ### 🧪 What You Will Test
-- [] SSH into EC2 (public subnet)
-- [] From EC2, connect to your database using:
+- [ ] SSH into EC2 (public subnet)
+- [ ] From EC2, connect to your database using:
 mysql -h <RDS-endpoint> -u admin -p
-- [] Test web server returns your HTML/app
-- [] Confirm RDS cannot be reached from the internet
-- [] Confirm traffic only flows the right way
+- [ ] Test web server returns your HTML/app
+- [ ] Confirm RDS cannot be reached from the internet
+- [ ] Confirm traffic only flows the right way
 
 ### 📊 Optional Add-Ons (For “Wow” factor)
 - Load Balancer (ALB)
@@ -71,7 +71,8 @@ mysql -h <RDS-endpoint> -u admin -p
 
 ### Steps done
 1. Making VPC to section the subnet. Ensure to name it because if you have couple different VPC, it can be confusing.
-2. Once its done, create subnet (the option is on the left bar on the VPC). Choose the correct VPC and created 4 subnet (in the same region at the moment
+2. Once its done, create subnet (the option is on the left bar on the VPC). Choose the correct VPC and created 4 subnet with at least two different region. Choosing all four different region will not allow the database to be made.
+3. Made a database with the porject2_vpc that is made. Ensure to click on the *Additional Configuration* to choose name for the database. Not making a name will not create the database. It will be located around the bottom part and will be minimize. 
 
 
 
