@@ -7,7 +7,7 @@
 <p>Route 53 routing (one that available, not on staging):<br/><a href="ds6gjuljiyr6n.cloudfront.net">ds6gjuljiyr6n.cloudfront.net</a></p>
 
 ### Overview
-This Projectis my first cloud deployment. I used simple static HTML page and hosted it using Amazon S3, added CloudFront for better performance, and then transfer my domain through Route53, and use ACM to make it able to accept HTTPS traffic. The goal is to understand how AWS handles storage, CDN distribution, DNS, and certificates.
+This Project is my first cloud deployment. I used simple static HTML page and hosted it using Amazon S3, added CloudFront for better performance, and then transfer my domain through Route53, and use ACM to make it able to accept HTTPS traffic. The goal is to understand how AWS handles storage, CDN distribution, DNS, and certificates.
 
 ### Tools
 | Services | The Use |

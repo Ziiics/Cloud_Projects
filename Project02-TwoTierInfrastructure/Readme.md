@@ -2,17 +2,32 @@
 
 # Project 2 - AWS Two-Tier Infrastructure Build
 
-## Instruction received from ChatGPT
+### Overview
+This project creates a real two-tier cloud architecture with a Web Tier (EC2) in public subnets and a Database Tier (RDS) in private subnets inside a properly designed VPC. It mirrors what companies deploy in production and teached cloud networking, routing, database security, and infrasturcture design.
 
-### This project builds a basic two-tier architecture, which is the foundation of most cloud applications:
+### Tools
+| Category | AWS Service/Tool | Purpose |
+| --- | --- | --- |
+| Compute | EC2 | Runs web server in public subnets |
+| Database | RDS (MySQL) | Stores apps data in private subnet |
+| Network | VPC  | Isolate entire environment |
+|  | Subnets | Separate internet-facing from internal ones |
+|  | Internet Gateway (IGW) | Allows EC2 intances in public subnets to access internet |
+|  | NAT Gateway | Asllows private subnet to reach internet |
+|  | Route Tables |  Controls traffic routing with VPC |
+| Security | Secuirty Groups | Firewall rules for EC2 and RDS | 
+|  | NACLs (optional) |  Additional subnet-level traffic filtering |
+| Access & Management | IAM | Roles and permissions for EC2 and RDS 
+| Monitoring | CloudWatch (optional) | Logs, metrics, alarms, dashboards |
+| Automation (optional) | Terraform/CloudFormation | IaC verrsion of the build | 
+
+### Details
 - Tier 1 — Web Server (EC2 in Public Subnets)
-  - A web server runs in public subnets so users on the internet can reach it.
-  - It connects outward to the database tier but the database cannot connect back.
 - Tier 2 — Database Tier (RDS in Private Subnets)
-  - A managed database runs inside private subnets with no internet access.
-  - Only the web server is allowed to talk to it through Security Groups.
 
-Cnnect the EC2 instance → to the RDS database → inside a properly designed VPC.
+---
+---
+---
 
 ### This is the most important beginner–intermediate cloud project because it teaches:
 1. 1 VPC
@@ -73,17 +88,3 @@ mysql -h <RDS-endpoint> -u admin -p
 1. Making VPC to section the subnet. Ensure to name it because if you have couple different VPC, it can be confusing.
 2. Once its done, create subnet (the option is on the left bar on the VPC). Choose the correct VPC and created 4 subnet with at least two different region. Choosing all four different region will not allow the database to be made.
 3. Made a database with the porject2_vpc that is made. Ensure to click on the *Additional Configuration* to choose name for the database. Not making a name will not create the database. It will be located around the bottom part and will be minimize. 
-
-
-
-
-
-You're totally free to apply to any/all credit programs we have available:
-In the links below you can review each site with detailed information:
-1. The AWS Nonprofit Credit Program: https://aws.amazon.com/government-education/nonprofits/nonprofit-credit-program/
-2. The AWS Promotional Credit Program supports experimentation and development for sustainability-related projects. https://aws.amazon.com/government-education/sustainability-research-credits/
-3. AWS Migration Acceleration Program: https://aws.amazon.com/migration-acceleration-program/
-4. AWS Activate: https://aws.amazon.com/activate/portfolio-detail/
-5. AWS Lift: https://aws.amazon.com/events/apj/aws-lift/
-
-The account creation/action is intended to be hassle-free. I'm not sure what exactly happened the last time you created the account. 
