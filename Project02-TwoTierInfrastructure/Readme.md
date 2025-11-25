@@ -27,37 +27,36 @@ This project creates a real two-tier cloud architecture with a Web Tier (EC2 - T
 - RDS Database (MySQL or PostgreSQL) as the DB tier
 - Security Groups controlling all ports between the two tiers
 
-### Steps done
+### Steps
 1. Making VPC to section the subnet. Ensure to name it because if you have couple different VPC, it can be confusing.
-<img src="Asset/Step1.png" alt="Step1_image">
+*<a href="Asset/Step1.png">(View Screenshot for Step 1)</a>*
 
 2. Once its done, create subnet (the option is on the left bar on the VPC). Choose the correct VPC and created 4 subnet with at least two different region. Choosing all four different region will not allow the database to be made.
-<img src="Asset/Step2.png" alt="Step2_image">
+*<a href="Asset/Step2.png">(View Screenshot for Step 2)</a>*
 
 3. Create 2 route table, public and private.
-<img src="Asset/Step3.png" alt="Step3_image">
+*<a href="Asset/Step3.png">(View Screenshot for Step 3)</a>*
 
 4. Create security groups that ia also located in VPC. Securiy group is like the friewall. Make one for EC2 and one for the RDS.
-<img src="Asset/Step5.png" alt="Step5_image">
+*<a href="Asset/Step4.png">(View Screenshot for Step 4)</a>*
 
 5. Go to EC2, then make key pairs and then create an instance. The key pairs will be used for the instance to ensure secure access. When making the insatnce, ensure to choose the right VPC to be able to choose the seucirty group.
-<img src="Asset/Step4_1.png" alt="Step4_image">
-<img src="Asset/Step4_2.png" alt="Step4_image">
+*<a href="Asset/Step5.png">(View Screenshot for Step 5)</a>*
 
 6. Made a database with the project2_vpc that is made. Ensure to click on the *Additional Configuration* to choose name for the database. Not making a name will not create the database. It will be located around the bottom part and will be minimize. 
-<img src="Asset/Step6.png" alt="Step6_image">
+*<a href="Asset/Step6.png">(View Screenshot for Step 6)</a>*
 
 7. Create IAM user as admin and ensure that they have full SSM and RDS access
-<img src="Asset/Step7.png" alt="Step7_image">
+*<a href="Asset/Step7.png">(View Screenshot for Step 7)</a>*
 
 8. Utilize SSM System Manager and securely store password. I used SecureString for this.
-<img src="Asset/Step8.png" alt="Step8_image">
+*<a href="Asset/Step8.png">(View Screenshot for Step 8)</a>*
 
 9. 
 
 
 
-### 🔐 Security Design (Very Important)
+### 🔐 Security Design 
 - EC2 Security Group
   - Inbound: HTTP/HTTPS (optional), SSH from your IP
   - Outbound: Allow to the DB Security Group
