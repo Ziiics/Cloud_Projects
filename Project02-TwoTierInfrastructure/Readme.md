@@ -30,12 +30,30 @@ This project creates a real two-tier cloud architecture with a Web Tier (EC2 - T
 ### Steps done
 1. Making VPC to section the subnet. Ensure to name it because if you have couple different VPC, it can be confusing.
 <img src="Asset/Step1.png" alt="Step1_image">
+
 2. Once its done, create subnet (the option is on the left bar on the VPC). Choose the correct VPC and created 4 subnet with at least two different region. Choosing all four different region will not allow the database to be made.
 <img src="Asset/Step2.png" alt="Step2_image">
-3. Create 2 route table, public and private
+
+3. Create 2 route table, public and private.
 <img src="Asset/Step3.png" alt="Step3_image">
-3. Made a database with the project2_vpc that is made. Ensure to click on the *Additional Configuration* to choose name for the database. Not making a name will not create the database. It will be located around the bottom part and will be minimize. 
-4. 
+
+4. Create security groups that ia also located in VPC. Securiy group is like the friewall. Make one for EC2 and one for the RDS.
+<img src="Asset/Step5.png" alt="Step5_image">
+
+5. Go to EC2, then make key pairs and then create an instance. The key pairs will be used for the instance to ensure secure access. When making the insatnce, ensure to choose the right VPC to be able to choose the seucirty group.
+<img src="Asset/Step4_1.png" alt="Step4_image">
+<img src="Asset/Step4_2.png" alt="Step4_image">
+
+6. Made a database with the project2_vpc that is made. Ensure to click on the *Additional Configuration* to choose name for the database. Not making a name will not create the database. It will be located around the bottom part and will be minimize. 
+<img src="Asset/Step6.png" alt="Step6_image">
+
+7. Create IAM user as admin and ensure that they have full SSM and RDS access
+<img src="Asset/Step7.png" alt="Step7_image">
+
+8. Utilize SSM System Manager and securely store password. I used SecureString for this.
+<img src="Asset/Step8.png" alt="Step8_image">
+
+9. 
 
 
 
