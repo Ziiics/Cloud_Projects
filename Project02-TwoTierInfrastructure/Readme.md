@@ -37,23 +37,57 @@ This project creates a real two-tier cloud architecture with a Web Tier (EC2 - T
 3. Create 2 route table, public and private.
 *<a href="Asset/Step3.png">(View Screenshot for Step 3)</a>*
 
-4. Create security groups that ia also located in VPC. Securiy group is like the friewall. Make one for EC2 and one for the RDS.
+4. Create security groups that ia also located in VPC. Securiy group is like the friewall. Make one for EC2 and one for the RDS. I choose Ubuntu as it is the most in demand.
 *<a href="Asset/Step4.png">(View Screenshot for Step 4)</a>*
 
 5. Go to EC2, then make key pairs and then create an instance. The key pairs will be used for the instance to ensure secure access. When making the insatnce, ensure to choose the right VPC to be able to choose the seucirty group.
 *<a href="Asset/Step5.png">(View Screenshot for Step 5)</a>*
 
-6. Made a database with the project2_vpc that is made. Ensure to click on the *Additional Configuration* to choose name for the database. Not making a name will not create the database. It will be located around the bottom part and will be minimize. 
+6. Go to RDS and create a subnet group that consist only of the private subnet.
 *<a href="Asset/Step6.png">(View Screenshot for Step 6)</a>*
 
-7. Create IAM user as admin and ensure that they have full SSM and RDS access
+7. Made a database with the project2_vpc that is made. For the subnet group, choose the previously made in the previous step. Ensure to click on the *Additional Configuration* to choose name for the database. Not making a name will not create the database. It will be located around the bottom part and will be minimize. 
 *<a href="Asset/Step7.png">(View Screenshot for Step 7)</a>*
 
-8. Utilize SSM System Manager and securely store password. I used SecureString for this.
+8. Create IAM user as admin and ensure that they have full SSM and RDS access
 *<a href="Asset/Step8.png">(View Screenshot for Step 8)</a>*
 
-9. 
+9. Utilize SSM System Manager and securely store password. I used SecureString for this.
+*<a href="Asset/Step9.png">(View Screenshot for Step 9)</a>*
 
+10. Connect to EC2. For this project, i am using SSH Client. The steps can be found by clicking **Connect** on the selected instance.
+*<a href="Asset/Step10.png">(View Screenshot for Step 10)</a>*
+
+11. Run these command on the SSH client
+```
+sudo apt-get update      #update the instance
+sudo apt-get install mysql-server     #install MySql to support database
+sudo apt-get install nginx    #used as reverse proxy, load balancer, mail proxy, and HTTP cache
+sudo apt-get install docker.io    #Platform as a service (PaaS) that use virtualization to deliver software as container
+
+  # host = RDS endpoint (to find, go to database -> connectivity & secuirty)
+  # user = Master username (to find, database -> Configuration)
+mysql -h host -u user -p       #to access mysql command platform to create database
+```
+
+12. Create database in MySql. I am creating a database where people who visit can write the purpose of their visit.
+```
+CREATE DATABASE mysql_database_name   # mysql_database_name can be change according to preference
+USE mysql_database_name     # choose the database we will be creating the table in
+
+#create the table inside the database. Mine is about purpose of their visit
+CREATE TABLE table_name (
+  Name VARCHAR(50);
+  Purpose VARCHAR(255);
+)
+```
+
+13. To check if the table exist. **Ensure to always add ';' at the end**ß
+```
+USE mysql_database_name;  # a must, describe which database we are looking at
+SHOW TABLE table_name;    # only show the table
+DESCRIBE table_name;      # show what is inside the table. like the type, etc
+```
 
 
 ### 🔐 Security Design 
