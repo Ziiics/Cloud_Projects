@@ -89,6 +89,11 @@ SHOW TABLE table_name;    # only show the table
 DESCRIBE table_name;      # show what is inside the table. like the type, etc
 ```
 
+14. Add your database. I built MySQL database using Python. Utilize boto3 to get the SecureString password from Parameter store, and using Flask as microservice to get obejct from the database.
+  *Add my code here once it is done*
+
+
+
 
 ### 🔐 Security Design 
 - EC2 Security Group
