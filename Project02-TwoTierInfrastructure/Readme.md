@@ -84,6 +84,7 @@ CREATE TABLE table_name (
 
 13. To check if the table exist. **Ensure to always add ';' at the end**ß
 ```
+SHOW DATABASES            # show different database
 USE mysql_database_name;  # a must, describe which database we are looking at
 SHOW TABLE table_name;    # only show the table
 DESCRIBE table_name;      # show what is inside the table. like the type, etc
@@ -92,6 +93,22 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
 14. Add your database. I built MySQL database using Python. Utilize boto3 to get the SecureString password from Parameter store, and using Flask as microservice to get obejct from the database.
   *Add my code here once it is done*
 
+15. Create S3 bucket. The permission is Block public access, and everything else is as default
+*<a href="Asset/Step15.png">(View Screenshot for Step 15)</a>*
+
+16. To be safe, I want to do some testing before continuing to the next step
+    - Checking Ec -> RDS connection
+      ``` python
+      mysql -h <RDS_ENDPOINT> -u <MASTER_USER> -p
+      show databases;
+      USE mysql_database_name;
+      SHOW TABLES;
+      INSERT INTO table_name (name, purpose) VALUES ('Test', 'Testing connection')
+      SELECT * FROM table_name
+      ```
+    - 
+
+17. 
 
 
 

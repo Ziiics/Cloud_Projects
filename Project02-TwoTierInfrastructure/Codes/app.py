@@ -44,7 +44,7 @@ def add_visitor():
     
     with connection.cursor() as cursor:
       query = (
-        "INSERT INTO visitors (name, purpose)"
+        "INSERT INTO visit_purpose (name, purpose)"
         "VALUES (%s, %s)"
         )
       data = (name, purpose)
