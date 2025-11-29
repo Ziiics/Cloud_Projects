@@ -174,3 +174,5 @@ mysql -h <RDS-endpoint> -u admin -p
 - Terraform version of the entire build
 - CloudWatch dashboards
 
+Made alias
+
