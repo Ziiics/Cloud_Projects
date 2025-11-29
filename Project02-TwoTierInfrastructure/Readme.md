@@ -107,11 +107,10 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
       SELECT * FROM table_name
       ```
     - Test if Backend (Flask) can talk to RDS 
-      - 1. Copy code to EC2 using ssh client.
+      1. Copy code to EC2 using ssh client.
           On EC2 SSH client,
             ```bash
-            scp -i "<i>pem_location_path</i>" "<i>local_file_to_app.py</i>" "ubuntu@<i>ip:path_to_file</i>"
-
+            scp -i <pem_location_path> <local_file_to_app.py> ubuntu@<ip>:<remote_path>
             ```
 
       
