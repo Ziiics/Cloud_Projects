@@ -102,7 +102,7 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
 16. Create S3 bucket. The permission is Block public access, and everything else is as default
 *<a href="Asset/Step15.png">(View Screenshot for Step 15)</a>*
 
-1.  To be safe, I want to do some testing before continuing to the next step
+17.  To be safe, I want to do some testing before continuing to the next step
     - Checking EC2 -> RDS connection
       ``` python
       mysql -h <RDS_ENDPOINT> -u <MASTER_USER> -p
@@ -127,7 +127,28 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
          * Serving Flask app 'app'
          * Debug mode: on
         ```
-      - Try getting infromation from my personal device to EC2 API. While EC2 instance is running, try connecting it through your computer with this command
+      - Try getting infromation from my personal device to EC2 API. While EC2 instance is running, try connecting it through your computer with this command to veirfy connectivity.
+        ```bash
+        curl -v http://18.207.179.105:5000/get_visitor
+        ```
+      - When I curl using port 5000 which is direct to Flask, I can get in, however when using regular http, it is blocked by Nginx 404. To fix this, update the configuration of nginx with ```nano /etc/nginx/sites-available/default```. Add this line to the server bracket.
+        ```bash
+          server {
+            listen 80 default_server;
+            listen [::]:80 default_server;
+
+            server_name _;
+
+            location / {
+              proxy_pass http://127.0.0.1:5000;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+            }
+          }
+        ```
+        
+        After finish editing, reload nginx and its agent. It works after this adjustment.
+      
 
 
       
