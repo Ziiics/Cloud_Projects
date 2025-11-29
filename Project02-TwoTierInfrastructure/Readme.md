@@ -93,10 +93,16 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
 14. Add your database. I built MySQL database using Python. Utilize boto3 to get the SecureString password from Parameter store, and using Flask as microservice to get obejct from the database.
   *Add my code here once it is done*
 
-15. Create S3 bucket. The permission is Block public access, and everything else is as default
+15. Make the path for the Python file to connect to MySQL. Then copy the file from local computer to EC2 instances.
+  ```bash
+  # On the remote_path, choose the path you want. I make a direcotyr called 'app' for this
+  scp -i <pem_location_path> <local_file_to_app.py> ubuntu@<ip>:<remote_path>
+  ```
+
+16. Create S3 bucket. The permission is Block public access, and everything else is as default
 *<a href="Asset/Step15.png">(View Screenshot for Step 15)</a>*
 
-16. To be safe, I want to do some testing before continuing to the next step
+1.  To be safe, I want to do some testing before continuing to the next step
     - Checking EC2 -> RDS connection
       ``` python
       mysql -h <RDS_ENDPOINT> -u <MASTER_USER> -p
@@ -107,11 +113,22 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
       SELECT * FROM table_name
       ```
     - Test if Backend (Flask) can talk to RDS 
-      1. Copy code to EC2 using ssh client.
-          On EC2 SSH client,
-            ```bash
-            scp -i <pem_location_path> <local_file_to_app.py> ubuntu@<ip>:<remote_path>
-            ```
+      - Ubuntu makes it hard for Python to install anything throught the pip command for security purpose. To do this, I ended up using venv (virtual environment)
+        ```bash
+        sudo apt-get install python3-venv
+        cd </path/to/your/project>
+
+        # best practice is to put it in the project directory, but still under .venv, as this venv will have all the installed package. Once this project need ot be zipped, everything including the venv will be zipped
+        python3 -m venv .venv # run this on the project folder
+        source .venv/bin/activate
+        ```
+      - Once it's up, the output will be along the line where it shows
+        ```python
+         * Serving Flask app 'app'
+         * Debug mode: on
+        ```
+      - Try getting infromation from my personal device to EC2 API. While EC2 instance is running, try connecting it through your computer with this command
+
 
       
 

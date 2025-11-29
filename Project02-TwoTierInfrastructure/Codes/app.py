@@ -11,9 +11,11 @@ CORS(app)
 
 # get pasword from SSM
 def get_ssm_secure_string():
+  # REPLACE region_name TO THE REGION OF YOUR EC2
   ssm_client = boto3.client('ssm',region_name = 'us-east-1')
   try:
     response = ssm_client.get_parameter(
+      # REPLACE Name TO THE NAME LISTED FOR THIS PROJECT IN Parameter store
       Name ='/project2/rds_password',
       WithDecryption = True
     )
@@ -22,11 +24,14 @@ def get_ssm_secure_string():
     print(f"Error retrieving parameter '/project2/rds_password': {e}")
     return None
 
+# Replace these values to indicate values
+# host = endpoint rds of this project
+# user = the user chosen with highest permission for this project, the listed user in IAM
 db_config = {
   'host': 'project2-database.cgpcgg00cq2s.us-east-1.rds.amazonaws.com',
   'user': 'admin',
   'password': get_ssm_secure_string(),
-  'database': 'database'
+  'database': 'purpose'
 }
 
 #connect python and mysql using db_config information
