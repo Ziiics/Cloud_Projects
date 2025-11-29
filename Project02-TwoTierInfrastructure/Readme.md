@@ -22,19 +22,19 @@ This project goal is to build a full two-tier using a Web Tier (EC2 - Tier 1) an
 - Security Groups controlling all ports between the two tiers
 
 ### Steps
-1. Making VPC to section the subnet. Ensure to name it because if you have couple different VPC, it can be confusing.
+1. Made new VPC and name it because if you have couple different VPC, it can be confusing.
 *<a href="Asset/Step1.png">(View Screenshot for Step 1)</a>*
 
-2. Once its done, create subnet (the option is on the left bar on the VPC). Choose the correct VPC and created 4 subnet with at least two different region. Choosing all four different region will not allow the database to be made.
+2. Create subnet (the option is on the left bar on the VPC). Choose the previously made VPC and created 4 subnet with at least two different region. Choosing all four different region will not allow the database to be made.
 *<a href="Asset/Step2.png">(View Screenshot for Step 2)</a>*
 
-3. Create 2 route table, public and private.
+3. Create 2 route table, public and private. Associare public subnet with IGW and private subnet with NAT.
 *<a href="Asset/Step3.png">(View Screenshot for Step 3)</a>*
 
-4. Create security groups that ia also located in VPC. Securiy group is like the friewall. Make one for EC2 and one for the RDS. I choose Ubuntu as it is the most in demand.
+4. Created one SG for EC2 and one for RDS. Security groups = firewalls. (I used Ubuntu because it's most common.)
 *<a href="Asset/Step4.png">(View Screenshot for Step 4)</a>*
 
-5. Go to EC2, then make key pairs and then create an instance. The key pairs will be used for the instance to ensure secure access. When making the insatnce, ensure to choose the right VPC to be able to choose the seucirty group.
+5. Go to EC2, then make key pairs and then create an instance. The key pairs will be used for the instance to ensure secure access. When making the insatnce, ensure to choose the right VPC to be able to choose the security group.
 *<a href="Asset/Step5.png">(View Screenshot for Step 5)</a>*
 
 6. Go to RDS and create a subnet group that consist only of the private subnet.
@@ -49,30 +49,31 @@ This project goal is to build a full two-tier using a Web Tier (EC2 - Tier 1) an
 9. Utilize SSM System Manager and securely store password. I used SecureString for this.
 *<a href="Asset/Step9.png">(View Screenshot for Step 9)</a>*
 
-10. Connect to EC2. For this project, i am using SSH Client. The steps can be found by clicking **Connect** on the selected instance.
+10.  Connect to EC2. For this project, i am using SSH Client. The steps can be found by clicking **Connect** on the selected instance.
 *<a href="Asset/Step10.png">(View Screenshot for Step 10)</a>*
 
-11. Run these command on the SSH client
+11.  Run these command on the SSH client to insatll requirement on EC2
 ```
 sudo apt-get update      #update the instance
 sudo apt-get install mysql-server     #install MySql to support database
 sudo apt-get install nginx    #used as reverse proxy, load balancer, mail proxy, and HTTP cache
 sudo apt-get install docker.io    #Platform as a service (PaaS) that use virtualization to deliver software as container
 
-  # host = RDS endpoint (to find, go to database -> connectivity & secuirty)
-  # user = Master username (to find, database -> Configuration)
+# Next is to connect to RDS 
+# host = RDS endpoint (to find, go to database -> connectivity & secuirty)
+# user = Master username (to find, database -> Configuration)
 mysql -h host -u user -p       #to access mysql command platform to create database
 ```
 
-12. Create database in MySql. I am creating a database where people who visit can write the purpose of their visit.
-```
+12.  Create mySQL database. I am creating a database where people who visit can write the purpose of their visit.
+```sql
 CREATE DATABASE mysql_database_name   # mysql_database_name can be change according to preference
 USE mysql_database_name     # choose the database we will be creating the table in
 
 #create the table inside the database. Mine is about purpose of their visit
 CREATE TABLE table_name (
-  Name VARCHAR(50);
-  Purpose VARCHAR(255);
+  name VARCHAR(50);
+  purpose VARCHAR(255);
 )
 ```
 
@@ -85,18 +86,18 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
 ```
 
 14. Add your database. I built MySQL database using Python. Utilize boto3 to get the SecureString password from Parameter store, and using Flask as microservice to get obejct from the database.
-  *Add my code here once it is done*
+  *<a href="Codes/app.py">(App.py code)</a>*
 
-15. Make the path for the Python file to connect to MySQL. Then copy the file from local computer to EC2 instances.
+15. Upload Flask App to EC2
   ```bash
   # On the remote_path, choose the path you want. I make a direcotyr called 'app' for this
   scp -i <pem_location_path> <local_file_to_app.py> ubuntu@<ip>:<remote_path>
   ```
 
-16. Create S3 bucket. The permission is Block public access, and everything else is as default
-*<a href="Asset/Step15.png">(View Screenshot for Step 15)</a>*
+16. I created the S3 bucket now, but havent been used yet (static website hosting or CloudFront).
+*<a href="Asset/Step15.png">(View Screenshot for Step 16)</a>*
 
-17.  To be safe, I want to do some testing before continuing to the next step
+17. To be safe, I want to do some testing before continuing to the next step
     - Checking EC2 -> RDS connection
       ``` python
       mysql -h <RDS_ENDPOINT> -u <MASTER_USER> -p
@@ -142,9 +143,10 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
         ```
         
         After finish editing, reload nginx and its agent. It works after this adjustment.
-      
 
+18. 
 
+---
       
 
 
