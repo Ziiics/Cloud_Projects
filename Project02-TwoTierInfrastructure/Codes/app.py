@@ -27,6 +27,7 @@ def get_ssm_secure_string():
 # Replace these values to indicate values
 # host = endpoint rds of this project
 # user = the user chosen with highest permission for this project, the listed user in IAM
+# database = the name of dataabse when doing CREATE DATABASE
 db_config = {
   'host': 'project2-database.cgpcgg00cq2s.us-east-1.rds.amazonaws.com',
   'user': 'admin',
