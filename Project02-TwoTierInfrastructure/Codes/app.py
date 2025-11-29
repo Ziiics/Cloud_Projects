@@ -10,16 +10,16 @@ app = Flask(__name__)
 CORS(app)
 
 # get pasword from SSM
-def get_ssm_secure_string(parameter_name, region_name = 'us-east-1'):
-  ssm_client = boto3.client('ssm',region_name = region_name)
+def get_ssm_secure_string():
+  ssm_client = boto3.client('ssm',region_name = 'us-east-1')
   try:
     response = ssm_client.get_parameter(
-      Name = parameter_name,
+      Name ='/project2/rds_password',
       WithDecryption = True
     )
     return response['Parameter']['Value']
   except Exception as e:
-    print(f"Error retrieving parameter '{parameter_name}': {e}")
+    print(f"Error retrieving parameter '/project2/rds_password': {e}")
     return None
 
 db_config = {
@@ -35,7 +35,6 @@ def get_connection():
 
 # part of necessity from flask itself
 @app.route('/add_visitor', methods=['POST'])
-# adding visitors to mysql
 def add_visitor():
   connection = get_connection()
   try:
@@ -59,7 +58,6 @@ def add_visitor():
 
 
 @app.route('/get_visitors')
-
 def get_visitor():
   connection = get_connection()
 
@@ -78,8 +76,7 @@ def get_visitor():
     connection.close()
 
 
-@app.route('/delete_visitors/<int::id>', method=['DELETE'])
-
+@app.route('/delete_visitors/<int:id>', methods=['DELETE'])
 def delete_visitor(id):
   connection = get_connection()
 
@@ -92,6 +89,7 @@ def delete_visitor(id):
       connection.commit()
     return jsonify({'success': True})
   except Exception as e :
+    print(e)
     return jsonify({'success': False})
   finally:
     connection.close()

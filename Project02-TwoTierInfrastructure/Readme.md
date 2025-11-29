@@ -97,7 +97,7 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
 *<a href="Asset/Step15.png">(View Screenshot for Step 15)</a>*
 
 16. To be safe, I want to do some testing before continuing to the next step
-    - Checking Ec -> RDS connection
+    - Checking EC2 -> RDS connection
       ``` python
       mysql -h <RDS_ENDPOINT> -u <MASTER_USER> -p
       show databases;
@@ -106,10 +106,15 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
       INSERT INTO table_name (name, purpose) VALUES ('Test', 'Testing connection')
       SELECT * FROM table_name
       ```
-    - 
+    - Test if Backend (Flask) can talk to RDS 
+      - 1. Copy code to EC2 using ssh client.
+          On EC2 SSH client,
+            ```bash
+            scp -i "<i>pem_location_path</i>" "<i>local_file_to_app.py</i>" "ubuntu@<i>ip:path_to_file</i>"
 
-17. 
+            ```
 
+      
 
 
 ### 🔐 Security Design 
