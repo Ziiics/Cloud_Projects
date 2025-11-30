@@ -147,32 +147,19 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
 18. 
 
 ---
-      
+
+### What's Left
+- [ ] Running both backend & frontend in Docker
+- [ ] Adding Nginx reverse proxy for Docker
+- [ ] (Optional) Building a small frontend
+- [ ] (Optional) Scaling / Load Balancer
+- [ ] Final documentation + diagram 
 
 
-### 🔐 Security Design 
+### Security Design 
 - EC2 Security Group
   - Inbound: HTTP/HTTPS (optional), SSH from your IP
   - Outbound: Allow to the DB Security Group
 - RDS Security Group
   - Inbound: ONLY from EC2's SG, on port 3306 (MySQL) or 5432 (Postgres)
   - No public access, no direct internet
-
-
-### 🧪 What You Will Test
-- [ ] SSH into EC2 (public subnet)
-- [ ] From EC2, connect to your database using:
-mysql -h <RDS-endpoint> -u admin -p
-- [ ] Test web server returns your HTML/app
-- [ ] Confirm RDS cannot be reached from the internet
-- [ ] Confirm traffic only flows the right way
-
-### 📊 Optional Add-Ons (For “Wow” factor)
-- Load Balancer (ALB)
-- Auto Scaling Group
-- Bastion Host (for private access)
-- Terraform version of the entire build
-- CloudWatch dashboards
-
-Made alias
-
