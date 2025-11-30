@@ -2,9 +2,10 @@
 # pymysql integrate Python and MySQL
 # flask CORS integrate the falsk fucntionality with the backend
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template,redirect, url_for
 import pymysql, boto3, mysql.connector
 from flask_cors import CORS
+from datetime import date
 
 app = Flask(__name__)
 CORS(app)
@@ -70,7 +71,7 @@ def get_visitor():
   try:
     with connection.cursor() as cursor:
       query = (
-        "SELECT * FROM visitors"
+        "SELECT * FROM visit_purpose"
       )
       cursor.execute(query)
       visitors = cursor.fetchall()
@@ -78,6 +79,33 @@ def get_visitor():
     return jsonify({'visitors': visitors})
   except Exception as e:
     return jsonify({'visitors': []})
+  finally:
+    connection.close()
+
+@app.route('/', methods=['GET','POST'])
+def home():
+  connection = get_connection()
+
+  try:
+    if request.method == 'POST':
+      name = request.form['name']
+      purpose = request.form['purpose']
+      with connection.cursor() as cursor:
+        cursor.execute = (
+          "INSERT INTO visit_purpose (name, purpose) VALUES (%s, %s)",
+          (name, purpose)
+        )
+        connection.commit()
+    
+    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+      query = (
+        "SELECT * FROM visit_purpose"
+      )
+      cursor.execute(query)
+      visitors = cursor.fetchall()
+    
+    today = date.today().strftime('%Y-%m-%d')
+    return render_template('index.html', today=today, visitors=visitors)
   finally:
     connection.close()
 
@@ -89,11 +117,11 @@ def delete_visitor(id):
   try:
     with connection.cursor() as cursor:
       query = (
-        "DELETE FROM visitors WHERE id = %s"
+        "DELETE FROM visit_purpose WHERE id = %s"
       )
       cursor.execute(query,(id,))
       connection.commit()
-    return jsonify({'success': True})
+    return redirect(url_for('home'))
   except Exception as e :
     print(e)
     return jsonify({'success': False})

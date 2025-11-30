@@ -6,14 +6,14 @@
 This project goal is to build a full two-tier using a Web Tier (EC2 - Tier 1) and a Database Tier (RDS - Tier 2) Everything is inside a custom PVC with proper subnets, routing, and security. I am also using Nginx and Docker for the application layer. I will be keeping this README simpel and written in my own style, with some sprinkle of how I overcome specific issue.
 
 ### Tools
-| Category | AWS Service/Tool | Purpose |
-| --- | --- | --- |
-| Compute | EC2 | Runs web server in public subnets |
-| Database | RDS (MySQL) | Stores apps data in private subnet |
-| Network | VPC, Subnets, IGW, NAT, Route Tables | Full network segmentation|
-| Security | Security Groups | Firewall rules for EC2 and RDS | 
-| Secrets | SSM Parameter Store | Secure DB password storage |
-| Access & Management | IAM | Roles and permissions for EC2 and RDS 
+| AWS Service/Tool | Purpose |
+| --- | --- |
+| Compute - EC2 | Runs web server in public subnets |
+| Database - RDS (MySQL) | Stores apps data in private subnet |
+| Network - VPC, Subnets, IGW, NAT, Route Tables | Full network segmentation|
+| Security - Security Groups | Firewall rules for EC2 and RDS | 
+| Secrets - SSM Parameter Store | Secure DB password storage |
+| Access & Management - IAM | Roles and permissions for EC2 and RDS 
 
 ### Notes
 - I tend to name every container, subnets, vpc, everything as it make it less confusing
@@ -154,6 +154,7 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
 - [ ] (Optional) Building a small frontend
 - [ ] (Optional) Scaling / Load Balancer
 - [ ] Final documentation + diagram 
+- [ ] NAT gateway
 
 
 ### Security Design 

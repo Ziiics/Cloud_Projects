@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Log</title>
+</head>
+
+<body>
+      <h1>Visitor Log - {{ today }}</h1>
+
+  <form method="POST" action="/">
+    <label>Name:</label>
+    <input type="text" name="name" required>
+    <label>Purpose:</label>
+    <input type="text" name="purpose" required>
+    <button type="submit">Add</button>
+  </form>
+
+  <h2>Current Visitors</h2>
+  <table border="1" cellpadding="4">
+    <tr><th>Name</th><th>Purpose</th><th>Action</th></tr>
+    {% for v in visitors %}
+      <tr>
+        <td>{{ v.name }}</td>
+        <td>{{ v.purpose }}</td>
+        <td>
+          <form method="POST" action="/delete/{{ v.id }}">
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+</body>
+
+</html>
