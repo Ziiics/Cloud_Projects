@@ -144,7 +144,8 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
         
         After finish editing, reload nginx and its agent. It works after this adjustment.
 
-18. 
+18. After confirming all the backend fucntionality works, I start adding the running apps to the Docker. Start installing and installing requirements in the Docker.
+19. 
 
 ---
 

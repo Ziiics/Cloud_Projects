@@ -8,7 +8,7 @@ Then to deactivate
     deactivate 2>/dev/null || true
 
 To get to the database
-    mysql -h proejct2-database.cgpcgg00cq2s.us-east-1.rds.amazonaws.com -u admin -p
+    mysql -h project2-database.cgpcgg00cq2s.us-east-1.rds.amazonaws.com -u admin -p
 
 Database information
     Databse Name: purpose
@@ -17,18 +17,13 @@ Database information
 Nginx
     To find nginx file: nginx -V 2>&1 | grep --color=always -oP '(?<=--conf-path=)[^ ]+'
 
-When this happenp on git,
-    On branch main
-    Your branch and 'origin/main' have diverged,
-    and have 1 and 1 different commits each, respectively.
-    Changes not staged for commit:
-    (use "git add <file>..." to update what will be committed)
-    (use "git restore <file>..." to discard changes in working directory)
-            modified:   ../.gitignore
-    Untracked files:
-    (use "git add <file>..." to include in what will be committed)
-            ../project2-keypair.pem
-    no changes added to commit (use "git add" and/or "git commit -a")
-Do this:
+For Mac, to be able to run docker command, have to add docker command to your path manually
+    export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
 
-    
+On EC2, to get user
+    whoami
+Then to ensure the current user are able to run dockersudo 
+    usermod -aG docker ubuntu
+        Then just restart it, check it with 
+            docker ps
+

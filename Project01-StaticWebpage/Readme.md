@@ -23,16 +23,13 @@ This Project is my first cloud deployment. I used simple static HTML page and ho
 3. Added JSON bucket policy -*can be based on user permission, HTTPS or HTTP, global keys or enterprise keys, which part of the bucket is allowed, requiring MFA or not*- to control how the site can be accessed.
 4. Upload files to the bucket and tested the S3 website endpoint to ensure the corerct filei is accessible.
 5. Set up CloudFront -*Free up to 1TB if using Free Tier*-, chose my S3 website endpoint as the origin. Website-endpoint is recommend this time because it is a static webpage.
-6. Waited for the CloudFront distribution to finish deploying, then tested the CloudFront URL.
+6. Waited for the CloudFront distribution to finish deploying, then tested the CloudFront URL. *<a href="https://ds6gjuljiyr6n.cloudfront.net/">CloudFront URL</a>*
 7. Started the Route 53 setup to connect my own domain (I transferred the domain I already owned).
 8. After transferring, follow the procedure and you should be getting auth code. It then take up to 10 days for your current domain name registrar to process the request.
-9. At this moment of waiting, I used AWS Certificate Manager to request a public certificate for HTTPS. Choose the domain and wwiat for the process.
-
-### Current To-Do
-- [ ] Wait for Route 53 DNS transfer to finish
-- [ ] Confirm that the CloudFront URL works with HTTPS
-- [ ] Update my A-record to point to the distribution
-- [ ] Update bucket policy to only allow HTTPS
+9.  There will be an email to verify your domain, make sure to do that in thw 2 weeks timeline. 
+10. Update my A-record to point to the distribution on Route53. Created subdomain to continue using the same domain for different project.
+11. Use ACM to get TLS certification for my domain name **zivanas.com**, and chose to validate it via DNS. Once it's done, a *Cretae route on Route53* will show up and in one click, the information will be snet to Route53. The validating process can take up to 30 minutes.
+12. Update S3 bucket policy to only allow HTTPS
 
 
 ### Notes
@@ -41,6 +38,7 @@ This Project is my first cloud deployment. I used simple static HTML page and ho
 - Route 53 is not free, even if you’re using Free Tier — something to keep in mind.
 - In production, S3 buckets should be private and accessed through CloudFront (using OAC), but for learning, public access is fine. I also won't use WAF (Web Application Firewall), but in real life, it is very recommended.
 - To check the static webpage through S3 webpage, go to the project's bucket, then go to **Properties tab**. Scroll all the way to the bottom and you will see **Bucket Website Endpoint**. Copy it and paste it to webpage.
+- If your domain is moved form somehwere, ensure to check if the name server on Route53's Registered Domain is the same one that is listed in Route53's Hosted Zone.
 
 ### Bucket Policy I Used
 *For now, I allowed HTTP because HTTPS requires the certificate.*
@@ -50,7 +48,7 @@ This Project is my first cloud deployment. I used simple static HTML page and ho
     "Statement": [
         {
             "Sid": "RestrictToHTTPSReqOnly",
-            "Effect": "Allow",
+            "Effect": "Deny",
             "Principal": "*",
             "Action": "s3:*",
             "Resource": [
