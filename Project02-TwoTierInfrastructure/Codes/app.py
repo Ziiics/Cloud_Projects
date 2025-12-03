@@ -40,48 +40,6 @@ db_config = {
 def get_connection():
   return pymysql.connect(**db_config)
 
-# part of necessity from flask itself
-@app.route('/add_visitor', methods=['POST'])
-def add_visitor():
-  connection = get_connection()
-  try:
-    name = request.json['name']
-    purpose = request.json['purpose']
-    
-    with connection.cursor() as cursor:
-      query = (
-        "INSERT INTO visit_purpose (name, purpose)"
-        "VALUES (%s, %s)"
-        )
-      data = (name, purpose)
-      cursor.execute(query, data)
-      connection.commit()
-
-    return jsonify({'success':True})
-  except Exception as e:
-    return jsonify({'success': False})
-  finally:
-    connection.close()
-
-
-@app.route('/get_visitors')
-def get_visitor():
-  connection = get_connection()
-
-  try:
-    with connection.cursor() as cursor:
-      query = (
-        "SELECT * FROM visit_purpose"
-      )
-      cursor.execute(query)
-      visitors = cursor.fetchall()
-
-    return jsonify({'visitors': visitors})
-  except Exception as e:
-    return jsonify({'visitors': []})
-  finally:
-    connection.close()
-
 @app.route('/', methods=['GET','POST'])
 def home():
   connection = get_connection()
@@ -91,8 +49,8 @@ def home():
       name = request.form['name']
       purpose = request.form['purpose']
       with connection.cursor() as cursor:
-        cursor.execute = (
-          "INSERT INTO visit_purpose (name, purpose) VALUES (%s, %s)",
+        cursor.execute(
+          "INSERT INTO visit_purpose (Name, Purpose) VALUES (%s, %s)",
           (name, purpose)
         )
         connection.commit()
@@ -110,7 +68,7 @@ def home():
     connection.close()
 
 
-@app.route('/delete_visitors/<int:id>', methods=['DELETE'])
+@app.route('/delete_visitors/<int:id>', methods=['POST'])
 def delete_visitor(id):
   connection = get_connection()
 
@@ -121,12 +79,13 @@ def delete_visitor(id):
       )
       cursor.execute(query,(id,))
       connection.commit()
-    return redirect(url_for('home'))
+    
   except Exception as e :
     print(e)
     return jsonify({'success': False})
   finally:
     connection.close()
+  return redirect(url_for('home'))
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=5000, debug=True)

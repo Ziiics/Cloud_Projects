@@ -22,10 +22,10 @@
     <tr><th>Name</th><th>Purpose</th><th>Action</th></tr>
     {% for v in visitors %}
       <tr>
-        <td>{{ v.name }}</td>
-        <td>{{ v.purpose }}</td>
+        <td>{{ v.Name }}</td>
+        <td>{{ v.Purpose }}</td>
         <td>
-          <form method="POST" action="/delete/{{ v.id }}">
+          <form method="POST" action="/delete_visitors/{{ v.id }}">
             <button type="submit">Delete</button>
           </form>
         </td>
