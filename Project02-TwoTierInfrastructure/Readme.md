@@ -3,7 +3,7 @@
 # Project 2 - AWS Two-Tier Infrastructure Build
 
 ### Overview
-This project goal is to build a full two-tier using a Web Tier (EC2 - Tier 1) and a Database Tier (RDS - Tier 2) Everything is inside a custom PVC with proper subnets, routing, and security. I am also using Nginx and Docker for the application layer. I will be keeping this README simpel and written in my own style, with some sprinkle of how I overcome specific issue.
+This project goal is to build a full two-tier using a Web Tier (EC2 - Tier 1) and a Database Tier (RDS - Tier 2) Everything is inside a custom VPC with proper subnets, routing, and security. I am also using Nginx and Docker for the application layer. I will be keeping this README simple and written in my own style, with some sprinkle of how I overcome specific issue.
 
 ### Tools
 | AWS Service/Tool | Purpose |
@@ -13,7 +13,9 @@ This project goal is to build a full two-tier using a Web Tier (EC2 - Tier 1) an
 | Network - VPC, Subnets, IGW, NAT, Route Tables | Full network segmentation|
 | Security - Security Groups | Firewall rules for EC2 and RDS | 
 | Secrets - SSM Parameter Store | Secure DB password storage |
-| Access & Management - IAM | Roles and permissions for EC2 and RDS 
+| Access & Management - IAM | Roles and permissions for EC2 and RDS |
+| App Layer - Docker | Containerizes the Flask app for it to runs consistently on EC2 |
+| Framework - Flask | Web routing and form submission, renders HTML, commincate with RDS |
 
 ### Notes
 - I tend to name every container, subnets, vpc, everything as it make it less confusing
@@ -25,10 +27,10 @@ This project goal is to build a full two-tier using a Web Tier (EC2 - Tier 1) an
 1. Made new VPC and name it because if you have couple different VPC, it can be confusing.
 *<a href="Asset/Step1.png">(View Screenshot for Step 1)</a>*
 
-2. Create subnet (the option is on the left bar on the VPC). Choose the previously made VPC and created 4 subnet with at least two different region. Choosing all four different region will not allow the database to be made.
+2. Create subnet (the option is on the left bar on the VPC). Choose the previously made VPC and created 4 subnet with at least two different Availablity Zones. Choosing all four different Availability Zones will not allow the database to be made.
 *<a href="Asset/Step2.png">(View Screenshot for Step 2)</a>*
 
-3. Create 2 route table, public and private. Associare public subnet with IGW and private subnet with NAT.
+3. Create 2 route table, public and private. Associate public subnet with IGW and private subnet with NAT.
 *<a href="Asset/Step3.png">(View Screenshot for Step 3)</a>*
 
 4. Created one SG for EC2 and one for RDS. Security groups = firewalls. (I used Ubuntu because it's most common.)
@@ -72,16 +74,16 @@ USE mysql_database_name     # choose the database we will be creating the table 
 
 #create the table inside the database. Mine is about purpose of their visit
 CREATE TABLE table_name (
-  name VARCHAR(50);
-  purpose VARCHAR(255);
+  name VARCHAR(50),
+  purpose VARCHAR(255)
 )
 ```
 
 13. To check if the table exist. **Ensure to always add ';' at the end**ß
-```
+```sql
 SHOW DATABASES            # show different database
 USE mysql_database_name;  # a must, describe which database we are looking at
-SHOW TABLE table_name;    # only show the table
+SHOW TABLES;    # only show the table
 DESCRIBE table_name;      # show what is inside the table. like the type, etc
 ```
 
@@ -144,17 +146,13 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
         
         After finish editing, reload nginx and its agent. It works after this adjustment.
 
-18. After confirming all the backend functionality works, I moved the services to Docker. I made Dockerfile and the requiremens.txt file for the software to be downloaded. All information can be found on 
-
----
-
-### What's Left
-- [ ] Running both backend & frontend in Docker
-- [ ] Adding Nginx reverse proxy for Docker
-- [ ] (Optional) Scaling / Load Balancer
-- [ ] Final documentation + diagram 
-- [ ] NAT gateway
-
+18. Moved the services to Docker. I made Dockerfile and the requiremens.txt file for the software to be downloaded. All information can be found on **<a href="https://docs.docker.com/engine/install/ubuntu/">DockerDocs official page</a>**.
+    
+19. Run docker to ensure that all HTTP traffic goes to Flask app
+    ```bash
+    # You can choose your preferred image_name
+    docker run -d -p 80:5000 --name <project_name> <docker_iamge_name>
+    ```
 
 ### Security Design 
 - EC2 Security Group
