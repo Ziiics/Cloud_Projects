@@ -144,15 +144,13 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
         
         After finish editing, reload nginx and its agent. It works after this adjustment.
 
-18. After confirming all the backend fucntionality works, I start adding the running apps to the Docker. Start installing and installing requirements in the Docker.
-19. 
+18. After confirming all the backend functionality works, I moved the services to Docker. I made Dockerfile and the requiremens.txt file for the software to be downloaded. All information can be found on 
 
 ---
 
 ### What's Left
 - [ ] Running both backend & frontend in Docker
 - [ ] Adding Nginx reverse proxy for Docker
-- [ ] (Optional) Building a small frontend
 - [ ] (Optional) Scaling / Load Balancer
 - [ ] Final documentation + diagram 
 - [ ] NAT gateway

@@ -1,9 +1,10 @@
-FROM ubuntu:22.04
-WORKDIR /app
+FROM python:3.12-slim
+WORKDIR /project2
 COPY requirements.txt .
 
-RUN apt-get update && apt-get install -y python3-pip
-RUN pip install --upgrade setuptools
 RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+EXPOSE 5000
+EXPOSE 80
+EXPOSE 443
 CMD ["python", "app.py"]
-EXPOSE 3000
