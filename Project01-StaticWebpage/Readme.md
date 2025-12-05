@@ -4,7 +4,8 @@
 🔗 <a href="http://project1-static-webpage.s3-website.us-east-2.amazonaws.com/">Live Demo</a>
 
 <p>S3 Website Endpoint:<br/><a href="http://project1-static-webpage.s3-website.us-east-2.amazonaws.com">http://project1-static-webpage.s3-website.us-east-2.amazonaws.com</a></p>
-<p>Route 53 routing (one that available, not on staging):<br/><a href="ds6gjuljiyr6n.cloudfront.net">ds6gjuljiyr6n.cloudfront.net</a></p>
+
+<p>Route domain to point to S3 bucket<br/><a href="https://project1.zivanas.com">project1.zivanas.com</a></p>
 
 ### Overview
 This Project is my first cloud deployment. I used simple static HTML page and hosted it using Amazon S3, added CloudFront for better performance, and then transfer my domain through Route53, and use ACM to make it able to accept HTTPS traffic. The goal is to understand how AWS handles storage, CDN distribution, DNS, and certificates. I will be keeping this README simpel and written in my own style, with some sprinkle of how I overcome specific issue.
@@ -28,7 +29,7 @@ This Project is my first cloud deployment. I used simple static HTML page and ho
 8. After transferring, follow the procedure and you should be getting auth code. It then take up to 10 days for your current domain name registrar to process the request.
 9.  There will be an email to verify your domain, make sure to do that in thw 2 weeks timeline. 
 10. Update my A-record to point to the distribution on Route53. Created subdomain to continue using the same domain for different project.
-11. Use ACM to get TLS certification for my domain name **zivanas.com**, and chose to validate it via DNS. Once it's done, a *Cretae route on Route53* will show up and in one click, the information will be snet to Route53. The validating process can take up to 30 minutes.
+11. Use ACM to get TLS certification for my domain name **zivanas.com**, and chose to validate it via DNS. Once it's done, a *Create route on Route53* will show up and in one click, the information will be snet to Route53. The validating process can take up to 30 minutes.
 12. Update S3 bucket policy to only allow HTTPS
 
 
