@@ -42,25 +42,17 @@ This Project is my first cloud deployment. I used simple static HTML page and ho
 - If your domain is moved form somehwere, ensure to check if the name server on Route53's Registered Domain is the same one that is listed in Route53's Hosted Zone.
 
 ### Bucket Policy I Used
-*For now, I allowed HTTP because HTTPS requires the certificate.*
+*Changed it to Allow all for S3 as domain will be pointing to Cloud Front*
 ```
 {
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "RestrictToHTTPSReqOnly",
-            "Effect": "Deny",
+            "Sid": "AllowPublicReadAccess",
+            "Effect": "Allow",
             "Principal": "*",
-            "Action": "s3:*",
-            "Resource": [
-                "arn:aws:s3:::project1-static-webpage",
-                "arn:aws:s3:::project1-static-webpage/*"
-            ],
-            "Condition": {
-                "Bool": {
-                    "aws:SecureTransport": "false"
-                }
-            }
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::project1.zivanas.com/*"
         }
     ]
 }
