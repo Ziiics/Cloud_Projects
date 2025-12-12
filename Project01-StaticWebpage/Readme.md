@@ -1,8 +1,7 @@
 # Project 1 - Static Website Deployment on AWS
 
 <img src="Asset/brand_project1.png" alt="Brand">
-🔗 
-<p>Route domain to point to S3 bucket<br/><a href="https://project1.zivanas.com">project1.zivanas.com</a></p>
+🔗 <p>Route domain to point to S3 bucket<br/><a href="https://project1.zivanas.com">project1.zivanas.com</a></p>
 
 ### Overview
 This Project is my first cloud deployment. I used simple static HTML page and hosted it using Amazon S3, added CloudFront for better performance, and then transfer my domain through Route53, and use ACM to make it able to accept HTTPS traffic. The goal is to understand how AWS handles storage, CDN distribution, DNS, and certificates. I will be keeping this README simpel and written in my own style, with some sprinkle of how I overcome specific issue.

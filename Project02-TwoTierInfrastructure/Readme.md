@@ -1,6 +1,7 @@
-***In Progress***
-
 # Project 2 - AWS Two-Tier Infrastructure Build
+
+**Diagram to come**
+
 
 ### Overview
 This project goal is to build a full two-tier using a Web Tier (EC2 - Tier 1) and a Database Tier (RDS - Tier 2) Everything is inside a custom VPC with proper subnets, routing, and security. I am also using Nginx and Docker for the application layer. I will be keeping this README simple and written in my own style, with some sprinkle of how I overcome specific issue.
