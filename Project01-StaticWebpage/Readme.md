@@ -1,8 +1,7 @@
 # Project 1 - Static Website Deployment on AWS
 
-<img src="brand_project1.png" alt="Brand">
-🔗 <a href="http://project1.zivanas.com/">project1.zivanas.com</a>
-
+<img src="Asset/brand_project1.png" alt="Brand">
+🔗 
 <p>Route domain to point to S3 bucket<br/><a href="https://project1.zivanas.com">project1.zivanas.com</a></p>
 
 ### Overview
