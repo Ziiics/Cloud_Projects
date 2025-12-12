@@ -4,7 +4,8 @@
 | No. | Summary | Description | Learnt | Date |
 | --- | --- | --- | --- | --- | 
 | Project 1 | Static Webpage Deployment on AWS | First cloud deployment. I used a simple static HTML page and hosted it using Amazon S3, added CloudFront for better performance, transferred my domain through Route53, and used ACM for HTTPS traffic. | HTML, S3, CloudFront, ACM, Route 53 | 11/14/2025 - 10/15/2025 |
-| Project 2 | Two-Tier Infrastructure | Building priavte and public subnet in VPC where the private one can only be accessible by the public one with limited permission. The private database will contain MySQL database. | VPC, IAM, SSM, RDS, EC2 | 11/23 - current |
+| Project 2 | Two-Tier Infrastructure | Building priavte and public subnet in VPC where the private one can only be accessible by the public one with limited permission. The private database will contain MySQL database. | VPC, IAM, SSM, RDS, EC2 | 11/23/2025 - 12/4/2025 |
+| Project 3 | Journaling Webpage | This is a project of personal interest. I realize that often times journaling is expected to be done by papre or ePaper, but it means that I have to bring extra device with me. So I would love to imagine the possiblity of having a secure journaling that is personalized to each user. | 12/12/2025 - ongoing |
 
 
 
