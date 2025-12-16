@@ -1,10 +1,10 @@
 # Project 2 - AWS Two-Tier Infrastructure Build
 
 <img src="Assets/brand_project2.png" alt="Brand">
-<p>🔗 Route domain to point to S3 bucket<br/>
+<p>🔗 Route domain to point to S3 bucket<br/></p>
 
-<a href="http://18.207.179.105/">http://18.207.179.105/</a>
-<a href="http://project2.zivanas.com">project2.zivanas.com</a></p>
+<a href="http://18.207.179.105/">http://18.207.179.105/</a> or with my domain 
+<a href="http://project2.zivanas.com">project2.zivanas.com</a>
 
 **Diagram to come**
 
