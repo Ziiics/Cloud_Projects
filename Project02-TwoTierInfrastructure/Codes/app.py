@@ -48,6 +48,10 @@ def home():
     if request.method == 'POST':
       name = request.form['name']
       purpose = request.form['purpose']
+
+      if not name or not purpose:
+        return ("Bad Request", 400)
+      
       with connection.cursor() as cursor:
         cursor.execute(
           "INSERT INTO visit_purpose (Name, Purpose) VALUES (%s, %s)",

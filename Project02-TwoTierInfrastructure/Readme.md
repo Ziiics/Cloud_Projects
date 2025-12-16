@@ -158,6 +158,15 @@ DESCRIBE table_name;      # show what is inside the table. like the type, etc
     docker run -d -p 80:5000 --name <project_name> <docker_iamge_name>
     ```
 
+20. Now that it all works, I will be closing my SSH port for public. For security purpose, I will start accessing only through session manager. We can do this through AWS Systems Manager. Go to session manager and start a session. Once you get access, you will not directly be in Ubuntu, so run these commands,
+    ```bash
+    pwd
+    cd /home
+
+    # I use ubuntu so my folder is ubuntu
+    sudo su - ubuntu
+    ```
+
 ### Security Design 
 - EC2 Security Group
   - Inbound: HTTP/HTTPS (optional), SSH from your IP
