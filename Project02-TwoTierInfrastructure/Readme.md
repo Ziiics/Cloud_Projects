@@ -3,8 +3,8 @@
 <img src="Assets/brand_project2.png" alt="Brand">
 <p>🔗 Route domain to point to S3 bucket<br/></p>
 
-You can use the IP address <a href="http://18.207.179.105/">18.207.179.105</a> or with my domain 
-<a href="http://project2.zivanas.com">project2.zivanas.com</a>
+<p>You can use the IP address <a href="http://18.207.179.105/">18.207.179.105</a> or with my domain 
+<a href="http://project2.zivanas.com">project2.zivanas.com</a><p>
 
 **Diagram to come**
 
